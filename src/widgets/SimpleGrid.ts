@@ -18,7 +18,7 @@ export class SimpleGrid extends WidgetBase<SimpleGridProperties> {
 				overflow: 'scroll'
 			}
 		}, data.map((row) => {
-			return w(SimpleGridRow, { data: row, columns });
+			return w(SimpleGridRow, { key: row.id, data: row, columns });
 		}));
 	}
 }
@@ -38,7 +38,7 @@ export class SimpleGridRow extends WidgetBase<SimpleGridRowProperties> {
 			}
 		}, columns.map((column) => {
 			const item = data[column.id];
-			return w(SimpleGridCell, { item, column });
+			return w(SimpleGridCell, { key: column.id, item, column });
 		}));
 	}
 }
