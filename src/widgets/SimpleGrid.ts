@@ -14,7 +14,38 @@ export interface SimpleGridProperties extends WidgetProperties {
 export class SimpleGrid extends ThemeableMixin(WidgetBase)<SimpleGridProperties> {
 	protected render(): DNode {
 		const { data, columns } = this.properties;
-		return v('div', { classes: this.classes(css.grid) }, data.map((row) => {
+		return v('div', { classes: this.classes(css.grid) }, [
+			w(SimpleGridHeader, { columns }),
+			w(SimpleGridBody, { data, columns })
+		]);
+	}
+}
+
+export interface SimpleGridHeaderProperties extends WidgetProperties {
+	columns: any[];
+}
+
+@theme(css)
+export class SimpleGridHeader extends ThemeableMixin(WidgetBase)<SimpleGridHeaderProperties> {
+	protected render(): DNode {
+		const { columns } = this.properties;
+
+		return v('div', { classes: this.classes(css.row, css.header) }, columns.map((column) => {
+			return v('div', { classes: this.classes(css.cell) }, [ column.id ]);
+		}));
+	}
+}
+
+export interface SimpleGridBodyProperties extends WidgetProperties {
+	data: any[];
+	columns: any[];
+}
+
+@theme(css)
+export class SimpleGridBody extends ThemeableMixin(WidgetBase)<SimpleGridBodyProperties> {
+	protected render(): DNode {
+		const { data, columns } = this.properties;
+		return v('div', { classes: this.classes(css.body) }, data.map((row) => {
 			return w(SimpleGridRow, { key: row.id, data: row, columns });
 		}));
 	}
