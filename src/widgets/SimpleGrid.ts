@@ -8,14 +8,15 @@ import * as css from './styles/grid.m.css';
 export interface SimpleGridProperties extends WidgetProperties {
 	data: any[];
 	columns: any[];
+	onSortRequest(id: string, direction: 'asc' | 'desc'): void;
 }
 
 @theme(css)
 export class SimpleGrid extends ThemeableMixin(WidgetBase)<SimpleGridProperties> {
 	protected render(): DNode {
-		const { data, columns } = this.properties;
+		const { data, columns, onSortRequest } = this.properties;
 		return v('div', { classes: this.classes(css.grid) }, [
-			w(SimpleGridHeader, { columns }),
+			w(SimpleGridHeader, { columns, onSortRequest }),
 			w(SimpleGridBody, { data, columns })
 		]);
 	}
@@ -23,16 +24,36 @@ export class SimpleGrid extends ThemeableMixin(WidgetBase)<SimpleGridProperties>
 
 export interface SimpleGridHeaderProperties extends WidgetProperties {
 	columns: any[];
+	onSortRequest(id: string, direction: 'asc' | 'desc'): void;
 }
 
 @theme(css)
 export class SimpleGridHeader extends ThemeableMixin(WidgetBase)<SimpleGridHeaderProperties> {
 	protected render(): DNode {
-		const { columns } = this.properties;
+		const { columns, onSortRequest } = this.properties;
 
 		return v('div', { classes: this.classes(css.row, css.header) }, columns.map((column) => {
-			return v('div', { classes: this.classes(css.cell) }, [ column.id ]);
+			return w(SimpleGridHeaderCell, { key: column.id, column, onSortRequest });
 		}));
+	}
+}
+
+export interface SimpleGridHeaderCellProperties extends WidgetProperties {
+	column: any;
+	onSortRequest(id: string, direction: 'asc' | 'desc'): void;
+}
+
+@theme(css)
+export class SimpleGridHeaderCell extends ThemeableMixin(WidgetBase)<SimpleGridHeaderCellProperties> {
+
+	private _onClick() {
+		const { column } = this.properties;
+		this.properties.onSortRequest(column.id, 'desc');
+	}
+
+	protected render(): DNode {
+		const { column } = this.properties;
+		return v('div', { classes: this.classes(css.cell), onclick: this._onClick }, [ column.id ]);
 	}
 }
 

@@ -4,10 +4,11 @@
   "dependencies": {
     "@dojo/core": "beta1",
     "@dojo/has": "beta1",
+    "@dojo/i18n": "beta1",
     "@dojo/routing": "beta1",
     "@dojo/shim": "beta1",
     "@dojo/widget-core": "beta1",
-    "@dojo/i18n": "beta1",
+    "chance": "^1.0.8",
     "maquette": "2.4.3"
   },
   "devDependencies": {
@@ -16,6 +17,7 @@
     "@dojo/interfaces": "beta1",
     "@dojo/loader": "beta1",
     "@types/chai": "~3.4.0",
+    "@types/chance": "^0.7.33",
     "@types/glob": "~5.0.0",
     "@types/grunt": "~0.4.0",
     "@types/node": "^6.0.46",
