@@ -26,3 +26,28 @@ export function sort(id: string) {
 		return 0;
 	};
 }
+
+export const rootStyles = {
+	width: '1000px',
+	height: '500px',
+	'overflow-y': 'scroll',
+	'border': '1px solid #ddd'
+};
+
+export const gridStyles = {
+	width: '1000px',
+	height: '500px',
+	'overflow-y': 'scroll',
+	'border': '1px solid #ddd'
+};
+
+export const rowStyles = {
+	display: 'flex'
+
+};
+export const cellStyles = {
+	flex: '1',
+	border: '1px solid #ddd',
+	'border-top-style': 'none',
+	'border-right-style': 'none'
+};
