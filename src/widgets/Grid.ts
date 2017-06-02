@@ -85,22 +85,17 @@ class Row extends ThemeableMixin(WidgetBase)<RowProperties> {
 		return v('div', { classes:  this.classes(css.row, selected ? css.selected : null ), onclick: this._onClick }, columns.map((column) => {
 			const item = String(data[column.id]);
 
-			return w(Cell, { key: column.id, item });
+			return w(Cell, { key: column.id }, [ item ]);
 		}));
 	}
 }
 
-interface CellProperties extends WidgetProperties {
-	item: string;
-}
-
 @theme(css)
-class Cell extends ThemeableMixin(WidgetBase)<CellProperties> {
+class Cell extends ThemeableMixin(WidgetBase)<WidgetProperties> {
 
 	render(): DNode {
-		const { item } = this.properties;
 		console.log('cell render');
-		return v('div', { classes: this.classes(css.cell) }, [ item ]);
+		return v('div', { classes: this.classes(css.cell) }, this.children);
 
 	}
 }
